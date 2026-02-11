@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -7,7 +8,11 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the React app build
+app.use(express.static(path.join(__dirname, '../dist')));
+
 // Mock Data
+// ... [existing data stays same] ...
 const HERO_CONTENT = {
     badge: "Engineering the Next Generation",
     title: "Building Intelligent, Scalable AI Solutions",
@@ -114,7 +119,13 @@ app.get('/api/process', (req, res) => {
     res.json(PROCESS);
 });
 
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
 // Start Server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

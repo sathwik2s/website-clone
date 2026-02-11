@@ -49,10 +49,10 @@ function App() {
     const fetchData = async () => {
       try {
         const [heroRes, servicesRes, featuresRes, processRes] = await Promise.all([
-          fetch('http://localhost:5001/api/hero'),
-          fetch('http://localhost:5001/api/services'),
-          fetch('http://localhost:5001/api/features'),
-          fetch('http://localhost:5001/api/process')
+          fetch('/api/hero'),
+          fetch('/api/services'),
+          fetch('/api/features'),
+          fetch('/api/process')
         ]);
 
         const heroData = await heroRes.json();
